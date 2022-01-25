@@ -10,6 +10,7 @@ var loginRouter = require("./login");
 var logoutRouter = require("./logout");
 var recoverRouter = require("./recover");
 var registerRouter = require("./register");
+var confirmRouter = require("./confirm");
 
 module.exports = [
   indexRouter,
@@ -17,4 +18,5 @@ module.exports = [
   logoutRouter,
   recoverRouter,
   registerRouter,
+  confirmRouter,
 ];

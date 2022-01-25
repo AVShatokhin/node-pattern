@@ -1,13 +1,7 @@
-const mysql = require("mysql");
-var mysqlConnection;
+module.exports = (config) => {
+  const mysql = require("mysql");
 
-var mysqlMiddle = function (req, res, next) {
-  req.mysqlConnection = mysqlConnection;
-  next();
-};
-
-var mySqlInit = function (config) {
-  mysqlConnection = mysql.createConnection({
+  var mysqlConnection = mysql.createConnection({
     host: config.db_host,
     user: config.db_user,
     database: config.db_name,
@@ -24,11 +18,14 @@ var mySqlInit = function (config) {
       if (err) {
         throw err;
       } else {
+        mysqlConnection.SQL_BASE = require("./SQL_BASE")(config);
         console.log("mysql connected");
       }
     });
   });
-};
 
-module.exports.init = mySqlInit;
-module.exports.middle = mysqlMiddle;
+  return function (req, res, next) {
+    req.mysqlConnection = mysqlConnection;
+    next();
+  };
+};
