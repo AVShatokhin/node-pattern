@@ -20,7 +20,7 @@ loginRouter.post("/login", async function (req, res, next) {
             return;
           }
 
-          let newToken = req.newToken();
+          let newToken = req.session.newToken();
 
           res.result.userData = {
             role: result[0].role,

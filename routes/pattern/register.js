@@ -10,7 +10,7 @@ router.post("/register", async function (req, res, next) {
       if (err) {
         res.error("SQL", err);
       } else {
-        let __newToken = req.newToken();
+        let __newToken = req.session.newToken();
         await addToken(result?.insertId, __newToken);
         await req.sendMail.confirm(req.body.email, __newToken);
         res.ok();
