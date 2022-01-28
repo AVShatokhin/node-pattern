@@ -4,6 +4,7 @@ module.exports = (config) => {
   let app_name = config.app_name;
   let base_url = config.base_url;
   let smtp_user = config.smtp_user;
+  let api_url = config.api_url;
 
   let transporter = nodemailer.createTransport({
     host: config.smtp_server,
@@ -23,7 +24,7 @@ module.exports = (config) => {
       html:
         `Система контроля доступа <b>${app_name}</b> привествует Вас!<br>` +
         `<b>Для подтверждения почтового ящика перейдите по ссылке:</b>` +
-        ` <a href="http://${base_url}/confirm/${token}">подтвердить</a>`,
+        ` <a href="http://${base_url}${api_url}confirm/${token}">подтвердить</a>`,
     });
   };
 

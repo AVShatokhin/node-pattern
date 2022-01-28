@@ -34,7 +34,7 @@ app.use(renders);
 app.use(mysql);
 app.use(mail);
 app.use(session);
-app.use(conf.api_url, patternRouter);
+app.use("/" + conf.api_url, patternRouter);
 // ========== Pattern ---------
 
 // catch 404 and forward to error handler
