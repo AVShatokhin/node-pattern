@@ -3,9 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.post("/register", async function (req, res, next) {
+  let extended = req.body?.extended;
   await req.mysqlConnection.query(
     req.mysqlConnection.SQL_BASE.Register,
-    [req.body.email, req.body.password],
+    [req.body.email, req.body.password, JSON.stringify(extended)],
     async (err, result) => {
       if (err) {
         res.error("SQL", err);

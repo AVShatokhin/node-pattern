@@ -3,14 +3,16 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");
 
 // ========== Pattern +++++++++
+const conf = require("./etc/config");
 var patternRouter = require("./routes/pattern/");
-var renders = require("./libs/pattern/renders-middle")(require("./etc/config"));
-var mysql = require("./libs/pattern/mysql-middle")(require("./etc/config"));
-var mail = require("./libs/pattern/mail-middle")(require("./etc/config"));
+var renders = require("./libs/pattern/renders-middle")(conf);
+var mysql = require("./libs/pattern/mysql-middle")(conf);
+var mail = require("./libs/pattern/mail-middle")(conf);
 var session = require("./libs/pattern/session-middle")();
-var config = require("./libs/pattern/config-middle")(require("./etc/config"));
+var config = require("./libs/pattern/config-middle")(conf);
 // ========== Pattern ---------
 
 var app = express();
@@ -19,6 +21,7 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,7 +34,7 @@ app.use(renders);
 app.use(mysql);
 app.use(mail);
 app.use(session);
-app.use("/", patternRouter);
+app.use(conf.api_url, patternRouter);
 // ========== Pattern ---------
 
 // catch 404 and forward to error handler
