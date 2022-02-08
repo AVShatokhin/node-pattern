@@ -2,19 +2,19 @@ var express = require("express");
 var router = express.Router();
 
 /* GET home page. */
-router.post("/recover", async function (req, res, next) {
-  await req.mysqlConnection.query(
+router.post("/recover", function (req, res, next) {
+  req.mysqlConnection.query(
     req.mysqlConnection.SQL_BASE.Recover,
     [req.body.email],
-    async (err, result) => {
+    (err, result) => {
       if (err) {
         res.error("SQL", err);
       } else {
         let uid = result[0]?.uid;
         if (uid != null) {
           let __newToken = req.session.newToken();
-          await addToken(result[0]?.uid, __newToken);
-          await req.sendMail.recover(req.body.email, __newToken);
+          addToken(result[0]?.uid, __newToken);
+          req.sendMail.recover(req.body.email, __newToken);
         } else {
           console.log("Attempt to recover undefined user");
         }

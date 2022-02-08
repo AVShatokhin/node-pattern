@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-router.post("/set_password", async function (req, res, next) {
+router.post("/set_password", function (req, res, next) {
   if (req?.session?.isSession == true) {
     let newPassword = req.body?.password;
     if (!newPassword || newPassword === "") {
@@ -10,15 +10,14 @@ router.post("/set_password", async function (req, res, next) {
       return;
     }
 
-    await req.mysqlConnection.query(
+    req.mysqlConnection.query(
       req.mysqlConnection.SQL_BASE.setPassword,
       [newPassword, req.session.sessionData.uid],
-      async (err, result) => {
+      (err, result) => {
         if (err) {
           res.error("SQL", err);
         } else {
-          await deleteToken(req.session.sessionData.token);
-          res.ok();
+          deleteToken(req.session.sessionData.token);
         }
       }
     );
@@ -33,6 +32,8 @@ router.post("/set_password", async function (req, res, next) {
       (err, result) => {
         if (err) {
           res.error("SQL", err);
+        } else {
+          res.ok();
         }
       }
     );
