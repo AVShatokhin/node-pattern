@@ -33,6 +33,16 @@ module.exports = () => {
           res.result.errorMessage = "Нет пользователя или неправильный пароль";
           break;
 
+        case "BAD_TOKEN":
+          res.result.errorCode = type;
+          res.result.errorMessage = "Токен не распознан";
+          break;
+
+        case "EMPTY_PASSWORD":
+          res.result.errorCode = type;
+          res.result.errorMessage = "Пустой пароль не допускается";
+          break;
+
         default:
           res.result.errorCode = "UNKNOWN_ERROR";
           res.result.errorMessage = "Неизвестная ошибка";

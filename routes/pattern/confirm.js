@@ -13,7 +13,7 @@ router.get("/confirm/:token", async function (req, res, next) {
         if (result?.affectedRows === 1) {
           await deleteToken(token);
 
-          res.redirect(req.config.front_end_url);
+          res.redirect(req.config.front_end_url + "#/confirmed/");
         } else {
           next();
         }

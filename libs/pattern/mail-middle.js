@@ -5,6 +5,7 @@ module.exports = (config) => {
   let base_url = config.base_url;
   let smtp_user = config.smtp_user;
   let api_url = config.api_url;
+  let front_end_url = config.front_end_url;
 
   let transporter = nodemailer.createTransport({
     host: config.smtp_server,
@@ -24,12 +25,24 @@ module.exports = (config) => {
       html:
         `Система контроля доступа <b>${app_name}</b> привествует Вас!<br>` +
         `<b>Для подтверждения почтового ящика перейдите по ссылке:</b>` +
-        ` <a href="http://${base_url}${api_url}confirm/${token}">подтвердить</a>`,
+        ` <a href="${base_url}${api_url}confirm/${token}">подтвердить</a>`,
+    });
+  };
+
+  let recover = async (email, token) => {
+    await transporter.sendMail({
+      from: `"Система контроля доступа" <${smtp_user}>`,
+      to: email,
+      subject: `${app_name}: восстановление пароля [${token}]`,
+      html:
+        `Система контроля доступа <b>${app_name}</b> привествует Вас!<br>` +
+        `<b>Для установки нового пароля перейдите по ссылке:</b>` +
+        ` <a href="${front_end_url}#/new_password/${token}">установить новый пароль</a>`,
     });
   };
 
   return function (req, res, next) {
-    req.sendMail = { confirm };
+    req.sendMail = { confirm, recover };
     next();
   };
 };

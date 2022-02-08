@@ -19,6 +19,17 @@ module.exports = (config) => {
         throw err;
       } else {
         mysqlConnection.SQL_BASE = require("./SQL_BASE")(config);
+        mysqlConnection.asyncQuery = (sql, params) => {
+          return new Promise((resolve, reject) => {
+            mysqlConnection.query(sql, params, (err, result) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(result);
+              }
+            });
+          });
+        };
         console.log("mysql connected");
       }
     });
