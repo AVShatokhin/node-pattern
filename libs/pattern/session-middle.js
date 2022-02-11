@@ -28,7 +28,7 @@ module.exports = () => {
             console.log("Bad token for session-middle");
           } else {
             req.session.isSession = true;
-            req.session.sessionData = result[0];
+            req.session.userData = result[0];
           }
         },
         (err) => {
