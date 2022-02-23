@@ -29,6 +29,7 @@ module.exports = () => {
           } else {
             req.session.isSession = true;
             req.session.userData = result[0];
+            req.session.userData.extended = JSON.parse(result[0].extended);
           }
         },
         (err) => {

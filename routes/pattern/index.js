@@ -13,6 +13,8 @@ var registerRouter = require("./register");
 var confirmRouter = require("./confirm");
 var setPasswordRouter = require("./set_password");
 var checkTokenRouter = require("./check_token");
+var saveProfileRouter = require("./save_profile");
+var uploadAvaRouter = require("./upload_ava");
 
 module.exports = [
   indexRouter,
@@ -23,4 +25,6 @@ module.exports = [
   confirmRouter,
   setPasswordRouter,
   checkTokenRouter,
+  saveProfileRouter,
+  uploadAvaRouter,
 ];

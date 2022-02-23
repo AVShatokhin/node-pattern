@@ -8,5 +8,6 @@ module.exports = (config) => {
     AddToken: `INSERT into ${config.db_prefix}_tokens set uid=?, token=?`,
     deleteToken: `DELETE from ${config.db_prefix}_tokens where token=?`,
     sessionGetUserByToken: `SELECT ${config.db_prefix}_users.uid, email, role, blocked, confirmed, extended, token from ${config.db_prefix}_users, ${config.db_prefix}_tokens where token=? and ${config.db_prefix}_users.uid=${config.db_prefix}_tokens.uid`,
+    saveProfile: `UPDATE ${config.db_prefix}_users, ${config.db_prefix}_tokens set extended=? where ${config.db_prefix}_users.uid=${config.db_prefix}_tokens.uid and token=?`,
   };
 };
