@@ -16,6 +16,7 @@ var checkTokenRouter = require("./check_token");
 var saveProfileRouter = require("./save_profile");
 var uploadAvaRouter = require("./upload_ava");
 var deleteAvaRouter = require("./delete_ava");
+var changePasswordRouter = require("./change_password");
 
 module.exports = [
   indexRouter,
@@ -29,4 +30,5 @@ module.exports = [
   saveProfileRouter,
   uploadAvaRouter,
   deleteAvaRouter,
+  changePasswordRouter,
 ];

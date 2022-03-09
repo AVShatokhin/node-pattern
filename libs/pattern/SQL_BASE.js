@@ -5,6 +5,7 @@ module.exports = (config) => {
     Confirm: `UPDATE ${config.db_prefix}_users, ${config.db_prefix}_tokens set confirmed=true where ${config.db_prefix}_users.uid=${config.db_prefix}_tokens.uid and token=?`,
     Recover: `SELECT uid from ${config.db_prefix}_users where email=?`,
     setPassword: `UPDATE ${config.db_prefix}_users set pass_hash=md5(?) where uid=?`,
+    changePassword: `UPDATE ${config.db_prefix}_users set pass_hash=md5(?) where pass_hash=md5(?) and uid=?`,
     AddToken: `INSERT into ${config.db_prefix}_tokens set uid=?, token=?`,
     deleteToken: `DELETE from ${config.db_prefix}_tokens where token=?`,
     sessionGetUserByToken: `SELECT ${config.db_prefix}_users.uid, email, role, blocked, confirmed, extended, token from ${config.db_prefix}_users, ${config.db_prefix}_tokens where token=? and ${config.db_prefix}_users.uid=${config.db_prefix}_tokens.uid`,

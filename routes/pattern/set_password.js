@@ -12,12 +12,12 @@ router.post("/set_password", function (req, res, next) {
 
     req.mysqlConnection.query(
       req.mysqlConnection.SQL_BASE.setPassword,
-      [newPassword, req.session.sessionData.uid],
+      [newPassword, req.session.userData.uid],
       (err, result) => {
         if (err) {
           res.error("SQL", err);
         } else {
-          deleteToken(req.session.sessionData.token);
+          deleteToken(req.session.userData.token);
         }
       }
     );
