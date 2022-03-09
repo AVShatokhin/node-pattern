@@ -43,8 +43,6 @@ loginRouter.post("/login", async function (req, res, next) {
               token: newToken,
             };
 
-            console.log(res.result.userData);
-
             await req.mysqlConnection.query(
               req.mysqlConnection.SQL_BASE.AddToken,
               [result[0].uid, newToken],
