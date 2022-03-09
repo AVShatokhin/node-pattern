@@ -14,7 +14,7 @@ router.post("/upload_ava", function (req, res, next) {
     }
 
     req.files.new_ava.mv("public_node/avatars/" + file_name);
-    let ava_url = req.config.base_url + "avatars/" + file_name;
+    let ava_url = file_name;
 
     let extended = req.session.userData.extended;
     extended.ava_url = ava_url;

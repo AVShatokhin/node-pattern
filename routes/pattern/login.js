@@ -29,10 +29,17 @@ loginRouter.post("/login", async function (req, res, next) {
 
             let newToken = req.session.newToken();
 
+            let extended = JSON.parse(result[0].extended);
+
+            if (extended?.ava_url) {
+              extended.ava_url =
+                req.config.base_url + "avatars/" + extended.ava_url;
+            }
+
             res.result.userData = {
               role: result[0].role,
               email: result[0].email,
-              extended: JSON.parse(result[0].extended),
+              extended,
               token: newToken,
             };
 
