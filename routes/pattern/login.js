@@ -37,11 +37,13 @@ loginRouter.post("/login", async function (req, res, next) {
             }
 
             res.result.userData = {
-              role: result[0].role,
+              roles: JSON.parse(result[0].roles),
               email: result[0].email,
               extended,
               token: newToken,
             };
+
+            console.log(res.result.userData);
 
             await req.mysqlConnection.query(
               req.mysqlConnection.SQL_BASE.AddToken,

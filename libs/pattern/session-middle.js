@@ -1,4 +1,4 @@
-const { rejects } = require("assert");
+//const { rejects } = require("assert");
 
 module.exports = () => {
   var crypto = require("crypto");
@@ -20,6 +20,8 @@ module.exports = () => {
       return;
     }
 
+    console.log("s1");
+
     await req.mysqlConnection
       .asyncQuery(req.mysqlConnection.SQL_BASE.sessionGetUserByToken, [token])
       .then(
@@ -30,13 +32,16 @@ module.exports = () => {
             req.session.isSession = true;
             req.session.userData = result[0];
             req.session.userData.extended = JSON.parse(result[0].extended);
+            req.session.userData.roles = JSON.parse(req.session.userData.roles);
           }
         },
         (err) => {
           res.error("SQL", err);
+          console.log("session !");
+          console.log(err);
         }
       );
-
+    console.log("s2");
     next();
   };
 };
