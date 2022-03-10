@@ -33,10 +33,10 @@ module.exports = () => {
             req.session.userData = result[0];
             req.session.userData.extended = JSON.parse(result[0].extended);
             req.session.userData.roles = JSON.parse(req.session.userData.roles);
-            req.session.userData.extended.ava_url =
-              req.config.base_url +
-              "avatars/" +
-              req.session.userData.extended.ava_url;
+            // req.session.userData.extended.ava_url =
+            //   req.config.base_url +
+            //   "avatars/" +
+            //   req.session.userData.extended.ava_url;
           }
         },
         (err) => {

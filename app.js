@@ -13,7 +13,10 @@ var renders = require("./libs/pattern/renders-middle")(conf);
 var mysql = require("./libs/pattern/mysql-middle")(conf);
 var mail = require("./libs/pattern/mail-middle")(conf);
 var session = require("./libs/pattern/session-middle")();
-var config = require("./libs/pattern/config-middle")(conf);
+var config = require("./libs/pattern/config-middle")(
+  conf,
+  require("./etc/frontConfig")
+);
 // ========== Pattern ---------
 
 var app = express();

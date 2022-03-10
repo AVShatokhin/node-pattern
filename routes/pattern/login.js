@@ -31,10 +31,10 @@ loginRouter.post("/login", async function (req, res, next) {
 
             let extended = JSON.parse(result[0].extended);
 
-            if (extended?.ava_url) {
-              extended.ava_url =
-                req.config.base_url + "avatars/" + extended.ava_url;
-            }
+            // if (extended?.ava_url) {
+            //   extended.ava_url =
+            //     req.config.base_url + "avatars/" + extended.ava_url;
+            // }
 
             res.result.userData = {
               roles: JSON.parse(result[0].roles),
@@ -42,6 +42,8 @@ loginRouter.post("/login", async function (req, res, next) {
               extended,
               token: newToken,
             };
+
+            res.result.frontConfig = req.frontConfig;
 
             await req.mysqlConnection.query(
               req.mysqlConnection.SQL_BASE.AddToken,

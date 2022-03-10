@@ -18,6 +18,7 @@ router.post("/check_token", async function (req, res, next) {
       res.error("BAD_TOKEN");
     } else {
       res.result.userData = req.session.userData;
+      res.result.frontConfig = req.frontConfig;
       res.ok();
     }
   });
