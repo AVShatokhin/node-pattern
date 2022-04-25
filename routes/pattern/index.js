@@ -17,6 +17,15 @@ var saveProfileRouter = require("./save_profile");
 var uploadAvaRouter = require("./upload_ava");
 var deleteAvaRouter = require("./delete_ava");
 var changePasswordRouter = require("./change_password");
+var getUsersRouter = require("./admin_get_users");
+var addUserRouter = require("./admin_add_user");
+var updateUserInfoRouter = require("./admin_update_user_info");
+var deleteUserRouter = require("./admin_delete_user");
+var updateUserPasswordRouter = require("./admin_update_user_password");
+var confirmEmailRouter = require("./admin_confirm_email");
+var requestConfirmationRouter = require("./admin_request_confirmation");
+var blockUserRouter = require("./admin_block_user");
+var unblockUserRouter = require("./admin_unblock_user");
 
 module.exports = [
   indexRouter,
@@ -31,4 +40,13 @@ module.exports = [
   uploadAvaRouter,
   deleteAvaRouter,
   changePasswordRouter,
+  getUsersRouter,
+  addUserRouter,
+  updateUserInfoRouter,
+  deleteUserRouter,
+  updateUserPasswordRouter,
+  confirmEmailRouter,
+  requestConfirmationRouter,
+  blockUserRouter,
+  unblockUserRouter,
 ];

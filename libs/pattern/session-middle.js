@@ -14,13 +14,11 @@ module.exports = () => {
       },
     };
 
-    let token = req.body?.token;
+    let token = req.body?.token | req.query?.token;
     if (token == null) {
       next();
       return;
     }
-
-    console.log("s1");
 
     await req.mysqlConnection
       .asyncQuery(req.mysqlConnection.SQL_BASE.sessionGetUserByToken, [token])
@@ -33,10 +31,6 @@ module.exports = () => {
             req.session.userData = result[0];
             req.session.userData.extended = JSON.parse(result[0].extended);
             req.session.userData.roles = JSON.parse(req.session.userData.roles);
-            // req.session.userData.extended.ava_url =
-            //   req.config.base_url +
-            //   "avatars/" +
-            //   req.session.userData.extended.ava_url;
           }
         },
         (err) => {
@@ -45,7 +39,7 @@ module.exports = () => {
           console.log(err);
         }
       );
-    console.log("s2");
+
     next();
   };
 };

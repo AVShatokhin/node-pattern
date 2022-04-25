@@ -43,6 +43,11 @@ module.exports = () => {
           res.result.errorMessage = "Пустой пароль не допускается";
           break;
 
+        case "ROLE_ERROR":
+          res.result.errorCode = type;
+          res.result.errorMessage = "Ошибка доступа! Недостаточно привелегий!";
+          break;
+
         default:
           res.result.errorCode = "UNKNOWN_ERROR";
           res.result.errorMessage = "Неизвестная ошибка";

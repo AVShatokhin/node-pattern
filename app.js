@@ -1,10 +1,10 @@
 var createError = require("http-errors");
 var express = require("express");
+const fileUpload = require("express-fileupload");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
-const fileUpload = require("express-fileupload");
 
 // ========== Pattern +++++++++
 const conf = require("./etc/config");
