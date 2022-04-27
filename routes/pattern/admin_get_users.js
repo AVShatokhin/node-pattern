@@ -2,6 +2,9 @@ var express = require("express");
 const { rethrow } = require("jade/lib/runtime");
 var router = express.Router();
 
+const MAX_PAGE_SIZE = 50;
+const START_PAGE = 0;
+
 /* GET home page. */
 router.get("/admin_get_users", async function (req, res, next) {
   if (
@@ -14,10 +17,38 @@ router.get("/admin_get_users", async function (req, res, next) {
     return;
   }
 
-  let data = {};
+  let data = {
+    queryLength: 0,
+    items: {},
+  };
+
+  let perPage = Number(req.query?.perPage || MAX_PAGE_SIZE);
+  let currentPage = Number(req.query?.currentPage || START_PAGE);
+  let searchQuery = req.query?.searchQuery || "";
 
   await req.mysqlConnection
-    .asyncQuery(req.mysqlConnection.SQL_BASE.getUsers, [])
+    .asyncQuery(req.mysqlConnection.SQL_BASE.getUsersCount, [
+      searchQuery,
+      searchQuery,
+    ])
+    .then(
+      (result) => {
+        data.queryLength = result[0].queryLength;
+      },
+      (err) => {
+        res.error("SQL", err);
+        console.log(err);
+        return;
+      }
+    );
+
+  await req.mysqlConnection
+    .asyncQuery(req.mysqlConnection.SQL_BASE.getUsers, [
+      searchQuery,
+      searchQuery,
+      currentPage * perPage,
+      perPage,
+    ])
     .then(
       async (result) => {
         result.forEach((element) => {
@@ -31,9 +62,9 @@ router.get("/admin_get_users", async function (req, res, next) {
           } else {
             element.blocked = false;
           }
-          data[element.uid] = element;
-          data[element.uid].extended = JSON.parse(element.extended);
-          data[element.uid].roles = JSON.parse(element.roles);
+          data.items[element.uid] = element;
+          data.items[element.uid].extended = JSON.parse(element.extended);
+          data.items[element.uid].roles = JSON.parse(element.roles);
         });
 
         await req.mysqlConnection
@@ -41,7 +72,9 @@ router.get("/admin_get_users", async function (req, res, next) {
           .then(
             (result) => {
               result.forEach((element) => {
-                data[element.uid].sessions = element.sessions;
+                if (data.items[element.uid] != undefined) {
+                  data.items[element.uid].sessions = element.sessions;
+                }
               });
             },
             (error) => {

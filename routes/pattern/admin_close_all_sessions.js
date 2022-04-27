@@ -3,7 +3,7 @@ const { rethrow } = require("jade/lib/runtime");
 var router = express.Router();
 
 /* GET home page. */
-router.post("/admin_delete_user", async function (req, res, next) {
+router.post("/admin_close_all_sessions", async function (req, res, next) {
   if (
     !(
       req.session.isSession == true &&
@@ -15,26 +15,29 @@ router.post("/admin_delete_user", async function (req, res, next) {
   }
 
   await req.mysqlConnection
-    .asyncQuery(req.mysqlConnection.SQL_BASE.adminDeleteUser, [req.body?.uid])
+    .asyncQuery(req.mysqlConnection.SQL_BASE.adminCloseAllSessions, [
+      req.body?.uid,
+    ])
     .then(
       async (result) => {
         await req.mysqlConnection
-          .asyncQuery(req.mysqlConnection.SQL_BASE.adminCloseAllSessions, [
+          .asyncQuery(req.mysqlConnection.SQL_BASE.adminGetSessionsCountByUID, [
             req.body?.uid,
           ])
           .then(
             (result) => {
+              res.result.sessionsCount = result[0].sessions;
               res.ok();
             },
             (err) => {
-              console.log(err);
               res.error("SQL", err);
+              console.log(err);
             }
           );
       },
       (err) => {
-        console.log(err);
         res.error("SQL", err);
+        console.log(err);
       }
     );
 });

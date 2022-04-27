@@ -26,6 +26,9 @@ var confirmEmailRouter = require("./admin_confirm_email");
 var requestConfirmationRouter = require("./admin_request_confirmation");
 var blockUserRouter = require("./admin_block_user");
 var unblockUserRouter = require("./admin_unblock_user");
+var closeAllSEssionsRouter = require("./admin_close_all_sessions");
+var useAcountRouter = require("./admin_use_account");
+var applyNewRoleRouter = require("./admin_apply_new_roles");
 
 module.exports = [
   indexRouter,
@@ -49,4 +52,7 @@ module.exports = [
   requestConfirmationRouter,
   blockUserRouter,
   unblockUserRouter,
+  closeAllSEssionsRouter,
+  useAcountRouter,
+  applyNewRoleRouter,
 ];

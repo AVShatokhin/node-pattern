@@ -14,8 +14,9 @@ module.exports = () => {
       },
     };
 
-    let token = req.body?.token | req.query?.token;
-    if (token == null) {
+    let token = req.body?.token || req.query?.token;
+
+    if (token == undefined) {
       next();
       return;
     }

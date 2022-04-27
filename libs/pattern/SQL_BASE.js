@@ -1,7 +1,6 @@
 module.exports = (config) => {
   return {
     Login: `SELECT uid, email, roles, blocked, confirmed, extended from ${config.db_prefix}_users where email=? and pass_hash=md5(?)`,
-    getUsers: `SELECT uid, email, roles, blocked, confirmed, extended from ${config.db_prefix}_users`,
     Register: `INSERT into ${config.db_prefix}_users set roles='["${config.default_user_role}"]', email=?, pass_hash=md5(?), extended=?`,
     Confirm: `UPDATE ${config.db_prefix}_users, ${config.db_prefix}_tokens set confirmed=true where ${config.db_prefix}_users.uid=${config.db_prefix}_tokens.uid and token=?`,
     Recover: `SELECT uid from ${config.db_prefix}_users where email=?`,
@@ -11,6 +10,8 @@ module.exports = (config) => {
     deleteToken: `DELETE from ${config.db_prefix}_tokens where token=?`,
     sessionGetUserByToken: `SELECT ${config.db_prefix}_users.uid, email, roles, blocked, confirmed, extended, token from ${config.db_prefix}_users, ${config.db_prefix}_tokens where token=? and ${config.db_prefix}_users.uid=${config.db_prefix}_tokens.uid`,
     saveProfile: `UPDATE ${config.db_prefix}_users, ${config.db_prefix}_tokens set extended=? where ${config.db_prefix}_users.uid=${config.db_prefix}_tokens.uid and token=?`,
+    getUsers: `SELECT uid, email, roles, blocked, confirmed, extended from ${config.db_prefix}_users WHERE email like CONCAT('%',?,'%') or extended like CONCAT('%',?,'%') order by uid LIMIT ?, ?`,
+    getUsersCount: `SELECT count(*) as queryLength from ${config.db_prefix}_users WHERE email LIKE CONCAT('%',?,'%') or extended like CONCAT('%',?,'%')`,
     adminAddUser: `INSERT into ${config.db_prefix}_users set roles='["${config.default_user_role}"]', email=?, pass_hash=md5(?), extended=?`,
     adminUpdateUserInfo: `UPDATE ${config.db_prefix}_users, ${config.db_prefix}_tokens set email=?, extended=? where ${config.db_prefix}_users.uid=?`,
     adminDeleteUser: `DELETE FROM ${config.db_prefix}_users where ${config.db_prefix}_users.uid=?`,
@@ -20,5 +21,9 @@ module.exports = (config) => {
     adminBlockUser: `UPDATE ${config.db_prefix}_users set blocked=true where uid=?`,
     adminUnBlockUser: `UPDATE ${config.db_prefix}_users set blocked=false where uid=?`,
     adminGetSessions: `SELECT uid, count(*) as sessions FROM ${config.db_prefix}_tokens GROUP BY uid`,
+    adminCloseAllSessions: `DELETE FROM ${config.db_prefix}_tokens WHERE uid=?`,
+    adminGetSessionsCountByUID: `SELECT count(*) as sessions FROM ${config.db_prefix}_tokens WHERE uid=?`,
+    adminApplyNewRoles: `UPDATE ${config.db_prefix}_users, ${config.db_prefix}_tokens set roles=? where ${config.db_prefix}_users.uid=?`,
+    getEmailByUID: `SELECT email FROM ${config.db_prefix}_users WHERE uid=?`,
   };
 };
