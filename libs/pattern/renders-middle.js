@@ -48,6 +48,16 @@ module.exports = () => {
           res.result.errorMessage = "Ошибка доступа! Недостаточно привелегий!";
           break;
 
+        case "TELEGRAM_ERROR":
+          res.result.errorCode = type;
+          res.result.errorMessage = err;
+          break;
+
+        case "TGLINK_NOTFOUND":
+          res.result.errorCode = type;
+          res.result.errorMessage = err;
+          break;
+
         default:
           res.result.errorCode = "UNKNOWN_ERROR";
           res.result.errorMessage = "Неизвестная ошибка";
