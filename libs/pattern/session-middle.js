@@ -1,5 +1,3 @@
-//const { rejects } = require("assert");
-
 module.exports = () => {
   var crypto = require("crypto");
 
@@ -11,6 +9,18 @@ module.exports = () => {
           .createHash("md5")
           .update(Math.random().toString(36).substr(2))
           .digest("hex");
+      },
+      checkRole: (req, res, roles) => {
+        let roleConfirmed = false;
+
+        if (req.session.isSession) {
+          roles.forEach((e) => {
+            if (req.session?.userData?.roles.includes(e)) roleConfirmed = true;
+          });
+        }
+
+        if (!roleConfirmed) res.error("ROLE_ERROR");
+        return roleConfirmed;
       },
     };
 
