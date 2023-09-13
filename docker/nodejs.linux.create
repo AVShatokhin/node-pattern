@@ -1,5 +1,5 @@
-docker stop apv
-docker rm apv
-docker run -it -d --restart=always --name apv --link=apv-db \
+docker run --restart=always -d --name apv \
+                                           -e TZ=Europe/Moscow \
+                                           --link=apv-db-dc \
                                            -v /home/webmaster/vodavrozliv:/home/webmaster/vodavrozliv \
                                            -w /home/webmaster/vodavrozliv/ -p 80:3000 node:14.16.1 node bin/www
