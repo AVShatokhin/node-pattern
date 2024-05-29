@@ -1,9 +1,11 @@
 module.exports = (config) => {
+  if (config?.DISABLE_NODE_TLS_REJECT_UNAUTHORIZED == true)
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
   const nodemailer = require("nodemailer");
 
   let app_name = config.app_name;
   let base_url = config.base_url;
-  let smtp_user = config.smtp_user;
+  let smtp_mailer_address = config.smtp_mailer_address;
   let api_url = config.api_url;
   let front_end_url = config.front_end_url;
 
@@ -19,7 +21,7 @@ module.exports = (config) => {
 
   let confirm = async (email, token) => {
     await transporter.sendMail({
-      from: `"Система контроля доступа" <${smtp_user}>`,
+      from: `"Система контроля доступа" <${smtp_mailer_address}>`,
       to: email,
       subject: `${app_name}: подтверждение электронной почты [${token}]`,
       html:
@@ -31,7 +33,7 @@ module.exports = (config) => {
 
   let recover = async (email, token) => {
     await transporter.sendMail({
-      from: `"Система контроля доступа" <${smtp_user}>`,
+      from: `"Система контроля доступа" <${smtp_mailer_address}>`,
       to: email,
       subject: `${app_name}: восстановление пароля [${token}]`,
       html:

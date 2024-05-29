@@ -2,25 +2,20 @@ var express = require("express");
 var router = express.Router();
 
 /* GET home page. */
-router.post("/admin_add_user", async function (req, res, next) {
+router.post("/deleteAPV", async function (req, res, next) {
   if (
     !(
       req.session.isSession == true &&
-      req.session.userData.roles.includes("admin") == true
+      (req.session.userData.roles.includes("DEPUTY") == true ||
+        req.session.userData.roles.includes("HEAD_OP_DEP") == true)
     )
   ) {
     res.error("ROLE_ERROR");
     return;
   }
 
-  let extended = req.body?.extended;
-
   await req.mysqlConnection
-    .asyncQuery(req.mysqlConnection.SQL_BASE.adminAddUser, [
-      req.body.email,
-      req.body.password,
-      JSON.stringify(extended),
-    ])
+    .asyncQuery(req.mysqlConnection.SQL_APP.deleteAPV, [req.body.sn])
     .then(
       (result) => {
         res.ok();

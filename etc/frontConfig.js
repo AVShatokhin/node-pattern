@@ -1,5 +1,5 @@
 const config = {
-  avatars_base_url: "http://127.0.0.1:3000/avatars",
+  avatars_base_url: "http://apv.yelka.ru/avatars",
 };
 
 module.exports = config;

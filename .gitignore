@@ -8,7 +8,9 @@ lerna-debug.log*
 etc/config.js
 /public/*
 /public_node/avatars/*
-
+/app
+./app
+./app/*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 

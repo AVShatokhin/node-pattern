@@ -30,6 +30,8 @@ var closeAllSEssionsRouter = require("./admin_close_all_sessions");
 var useAcountRouter = require("./admin_use_account");
 var applyNewRoleRouter = require("./admin_apply_new_roles");
 
+var appRouter = require("../../app/routes/app_index");
+
 module.exports = [
   indexRouter,
   loginRouter,
@@ -55,4 +57,5 @@ module.exports = [
   closeAllSEssionsRouter,
   useAcountRouter,
   applyNewRoleRouter,
+  appRouter,
 ];
