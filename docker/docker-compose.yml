@@ -1,28 +1,39 @@
 version: "3"
 services:
-    db:
+    pattern-db:
         image: mariadb:10.3
-        container_name: db
+        container_name: pattern-db
         environment:
             - MYSQL_ROOT_PASSWORD=patternMysqlPassword
             - TZ=Europe/Moscow
         volumes:
-            - /home/webmaster/pattern/mysql_data:/var/lib/mysql
-            - /home/webmaster/pattern/mysql_conf.d:/var/lib/mysql/conf.d
+            - /home/webmaster/node-pattern/mysql_data:/var/lib/mysql
+            - /home/webmaster/node-pattern/mysql_conf.d:/var/lib/mysql/conf.d
         ports:
             - "3306:3306"
         restart: always
-    back-end:
+    pattern-back-end:
         image: node:14.16.1
-        container_name: back-end
+        container_name: pattern-back-end
         command: node bin/www
         environment:
             - TZ=Europe/Moscow
         ports:
             - "3000:3000"
         volumes:
-            - /home/webmaster/pattern:/home/webmaster/pattern       
+            - /home/webmaster/node-pattern/back-end:/home/webmaster/node-pattern
         restart: always
         links:
-            - db
-        working_dir: /home/webmaster/pattern
+            - pattern-db
+        working_dir: /home/webmaster/node-pattern/www
+    pattern-php-myadmin:
+        image: phpmyadmin
+        container_name: pattern-php-myadmin
+        environment:
+            - PMA_HOST=db
+        links:
+            - pattern-db
+        ports: 
+            - "8082:80"
+        restart: always
+
