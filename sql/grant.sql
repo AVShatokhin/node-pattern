@@ -1,2 +1,2 @@
-CREATE USER `apvuser`@`%` IDENTIFIED BY '12345678qwerty'; 
-GRANT ALL PRIVILEGES ON `apv`.* TO `apvuser`@`%`;
+CREATE USER `pattern-user`@`%` IDENTIFIED BY 'pattern-user-password'; 
+GRANT ALL PRIVILEGES ON `pattern`.* TO `pattern-user`@`%`;

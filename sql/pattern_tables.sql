@@ -1,3 +1,7 @@
+DROP DATABASE pattern;
+CREATE DATABASE pattern;
+USE pattern;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -21,7 +25,7 @@ COMMIT;
 
 CREATE TABLE `pattern_users` (
   `uid` int(11) NOT NULL,
-  `email` text NOT NULL,
+  `email` varchar(255) NOT NULL,
   `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '[]' CHECK (json_valid(`roles`)),
   `blocked` tinyint(1) NOT NULL DEFAULT 0,
   `confirmed` tinyint(1) NOT NULL DEFAULT 0,

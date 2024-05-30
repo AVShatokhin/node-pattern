@@ -25,7 +25,7 @@ services:
         restart: always
         links:
             - pattern-db
-        working_dir: /home/webmaster/node-pattern/www
+        working_dir: /home/webmaster/node-pattern
     pattern-php-myadmin:
         image: phpmyadmin
         container_name: pattern-php-myadmin
